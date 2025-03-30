@@ -1,18 +1,38 @@
 :root {
-    --primary: #6c5ce7;
-    --primary-dark: #5649c0;
-    --secondary: #a29bfe;
-    --accent: #fd79a8;
-    --success: #00b894;
-    --danger: #d63031;
-    --warning: #fdcb6e;
-    --light: #f8f9fa;
-    --dark: #2d3436;
-    --gray: #636e72;
-    --light-gray: #e9ecef;
-    --border: #b2bec3;
-    --editor-bg: #1e1e1e;
-    --editor-text: #d4d4d4;
+    /* Primary Colors */
+    --primary: #4361ee;      /* Vibrant blue */
+    --primary-dark: #3a56d4; /* Slightly darker blue */
+    --primary-light: #4895ef; /* Lighter blue */
+    
+    /* Secondary Colors */
+    --secondary: #7209b7;    /* Deep purple */
+    --secondary-light: #b5179e; /* Pinkish purple */
+    
+    /* Accent Colors */
+    --accent: #f72585;       /* Bright pink */
+    --accent-light: #ff70a6;  /* Lighter pink */
+    
+    /* Status Colors */
+    --success: #4cc9f0;      /* Cyan */
+    --success-dark: #38b6db;
+    --danger: #f94144;       /* Red */
+    --warning: #f8961e;      /* Orange */
+    --info: #577590;         /* Steel blue */
+    
+    /* Neutrals */
+    --light: #f8f9fa;        /* Very light gray */
+    --dark: #212529;         /* Very dark gray */
+    --gray: #6c757d;         /* Medium gray */
+    --light-gray: #e9ecef;    /* Light gray */
+    --border: #dee2e6;       /* Border gray */
+    
+    /* Editor Colors */
+    --editor-bg: #1a1a2e;    /* Dark blue-gray */
+    --editor-text: #e2e2e2;   /* Light gray */
+    --editor-line-highlight: #2a2a3a;
+    --editor-selection: #3a3a5a;
+    
+    /* UI Sizes */
     --sidebar-width: 280px;
     --tab-height: 40px;
     --toolbar-height: 45px;
@@ -22,7 +42,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 body {
@@ -30,6 +50,7 @@ body {
     color: var(--dark);
     overflow: hidden;
     height: 100vh;
+    line-height: 1.6;
 }
 
 .app-container {
@@ -48,7 +69,7 @@ body {
     overflow-x: auto;
     white-space: nowrap;
     padding: 0 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 10;
     scrollbar-width: none;
 }
@@ -59,14 +80,17 @@ body {
 
 .project-tab-bar {
     background-color: var(--dark);
+    background: linear-gradient(90deg, var(--dark) 0%, #2b2d42 100%);
 }
 
 .folder-tab-bar {
-    background-color: #3d3d3d;
+    background-color: #2b2d42;
+    background: linear-gradient(90deg, #2b2d42 0%, #3a3a5a 100%);
 }
 
 .file-tab-bar {
-    background-color: #4d4d4d;
+    background-color: #3a3a5a;
+    background: linear-gradient(90deg, #3a3a5a 0%, #4a4a6a 100%);
 }
 
 .tab {
@@ -76,11 +100,13 @@ body {
     padding: 0 15px;
     margin: 0 3px;
     background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px 4px 0 0;
+    border-radius: 6px 6px 0 0;
     cursor: pointer;
     user-select: none;
     position: relative;
     transition: all 0.2s ease;
+    font-size: 0.85rem;
+    font-weight: 500;
 }
 
 .tab:hover {
@@ -90,7 +116,8 @@ body {
 .tab.active {
     background-color: var(--light);
     color: var(--dark);
-    box-shadow: 0 -2px 0 var(--primary) inset;
+    box-shadow: 0 -3px 0 var(--primary) inset;
+    font-weight: 600;
 }
 
 .tab-icon {
@@ -131,12 +158,13 @@ body {
     cursor: pointer;
     padding: 0 15px;
     height: calc(var(--tab-height) - 10px);
-    border-radius: 4px;
+    border-radius: 6px;
     margin-left: 10px;
     display: flex;
     align-items: center;
     gap: 8px;
     transition: all 0.2s;
+    font-size: 0.85rem;
 }
 
 .add-btn:hover {
@@ -200,17 +228,18 @@ body {
 }
 
 .tree-node {
-    padding: 6px 15px;
+    padding: 8px 15px;
     display: flex;
     align-items: center;
     cursor: pointer;
     transition: all 0.2s;
-    border-radius: 4px;
+    border-radius: 6px;
     margin-right: 10px;
+    font-size: 0.9rem;
 }
 
 .tree-node:hover {
-    background-color: var(--light-gray);
+    background-color: rgba(67, 97, 238, 0.1);
 }
 
 .toggle {
@@ -222,6 +251,11 @@ body {
     margin-right: 5px;
     font-size: 0.7rem;
     color: var(--gray);
+    transition: transform 0.2s;
+}
+
+.tree-node.expanded > .tree-node .toggle i {
+    transform: rotate(90deg);
 }
 
 .icon {
@@ -251,11 +285,11 @@ body {
 }
 
 .file-item > .tree-node .icon {
-    color: var(--secondary);
+    color: var(--secondary-light);
 }
 
 .file-item.active > .tree-node {
-    background-color: rgba(108, 92, 231, 0.1);
+    background-color: rgba(67, 97, 238, 0.1);
     color: var(--primary);
     font-weight: 500;
 }
@@ -286,13 +320,14 @@ body {
 .tool-btn {
     padding: 6px 12px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 0.85rem;
     display: flex;
     align-items: center;
     gap: 6px;
     transition: all 0.2s;
+    font-weight: 500;
 }
 
 .run-btn {
@@ -301,7 +336,7 @@ body {
 }
 
 .run-btn:hover {
-    background-color: #00a884;
+    background-color: var(--success-dark);
 }
 
 .save-btn {
@@ -314,13 +349,13 @@ body {
 }
 
 .export-btn {
-    background-color: var(--warning);
-    color: var(--dark);
+    background-color: var(--secondary);
+    color: white;
     margin-left: auto;
 }
 
 .export-btn:hover {
-    background-color: #e6b800;
+    background-color: #5e08a0;
 }
 
 .file-info {
@@ -329,7 +364,7 @@ body {
     color: var(--gray);
     padding: 0 10px;
     background-color: rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
+    border-radius: 6px;
     height: 30px;
     display: flex;
     align-items: center;
@@ -348,9 +383,9 @@ body {
     resize: none;
     background-color: var(--editor-bg);
     color: var(--editor-text);
-    font-family: 'Consolas', 'Monaco', monospace;
+    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.6;
     tab-size: 4;
 }
 
@@ -386,13 +421,14 @@ body {
 .btn {
     padding: 8px 16px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
     display: inline-flex;
     align-items: center;
     gap: 8px;
     transition: all 0.2s;
+    font-weight: 500;
 }
 
 .btn-sm {
@@ -435,7 +471,7 @@ body {
 }
 
 .btn-success:hover {
-    opacity: 0.9;
+    background-color: var(--success-dark);
 }
 
 .btn-danger {
@@ -444,7 +480,7 @@ body {
 }
 
 .btn-danger:hover {
-    opacity: 0.9;
+    background-color: #d32f2f;
 }
 
 /* Modals */
@@ -463,11 +499,11 @@ body {
 
 .modal-content {
     background-color: white;
-    border-radius: 8px;
+    border-radius: 12px;
     width: 450px;
     max-width: 95%;
     overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     animation: modalFadeIn 0.3s ease;
 }
 
@@ -485,6 +521,8 @@ body {
 .modal-header {
     padding: 15px 20px;
     border-bottom: 1px solid var(--border);
+    background-color: var(--primary);
+    color: white;
 }
 
 .modal-header h3 {
@@ -492,7 +530,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--dark);
+    color: white;
 }
 
 .modal-body {
@@ -511,14 +549,15 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-weight: 500;
 }
 
 .input-group input,
 .input-group select {
     width: 100%;
-    padding: 10px;
+    padding: 10px 12px;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 0.95rem;
     transition: all 0.2s;
 }
@@ -527,7 +566,7 @@ body {
 .input-group select:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
 }
 
 .modal-footer {
@@ -536,6 +575,7 @@ body {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    background-color: var(--light);
 }
 
 /* Upload Preview */
@@ -548,15 +588,17 @@ body {
 .upload-item {
     display: flex;
     align-items: center;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: 6px;
     margin-bottom: 8px;
+    background-color: var(--light);
 }
 
 .upload-item-icon {
     margin-right: 10px;
     font-size: 1.2rem;
+    color: var(--primary);
 }
 
 .upload-item-name {
@@ -564,11 +606,14 @@ body {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 0.9rem;
 }
 
 .upload-item-size {
     font-size: 0.8rem;
     color: var(--gray);
+    min-width: 60px;
+    text-align: right;
 }
 
 /* Tree Node Actions */
@@ -591,6 +636,13 @@ body {
     cursor: pointer;
     padding: 2px 5px;
     font-size: 0.8rem;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
 }
 
 .add-file-btn {
@@ -599,12 +651,13 @@ body {
 }
 
 .add-file-btn:hover {
+    background-color: rgba(76, 201, 240, 0.1);
     color: var(--success) !important;
-    transform: scale(1.1);
 }
 
 .tree-node-action:hover {
     color: var(--primary);
+    background-color: rgba(67, 97, 238, 0.1);
 }
 
 /* File Type Icons */
@@ -626,7 +679,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--border);
+    background: var(--primary-light);
     border-radius: 4px;
 }
 
@@ -699,5 +752,42 @@ body {
 /* Better scrollbars for Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: var(--border) var(--light);
+    scrollbar-color: var(--primary-light) var(--light);
+}
+
+/* Tooltips */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--dark);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 100;
+    margin-bottom: 5px;
+}
+
+/* Smooth transitions */
+.tab, .btn, .tree-node, .modal-content {
+    transition: all 0.2s ease;
+}
+
+/* Code syntax highlighting in preview */
+.code-block {
+    background-color: var(--editor-bg);
+    color: var(--editor-text);
+    padding: 10px;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    overflow-x: auto;
 }
